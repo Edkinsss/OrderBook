@@ -970,3 +970,171 @@ body {
 .btn-confirm:active {
   transform: translateY(-2px);
 }
+
+/* === НОВАЯ ШАПКА — ПОЛНЫЙ ЛЮКС === */
+.tables-header-v2 {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 90px;
+  background: rgba(77, 47, 37, 0.96);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  z-index: 1000;
+  border-bottom: 2px solid rgba(224, 208, 195, 0.4);
+}
+
+.shift-timer {
+  text-align: center;
+  color: #e0d0c3;
+  font-family: "Cinzel", serif;
+}
+
+.timer-label {
+  font-size: 14px;
+  opacity: 0.8;
+  letter-spacing: 0.1em;
+  display: block;
+}
+
+.timer-value {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #f7ede3;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.notif-wrapper {
+  position: relative;
+}
+
+.notif-bell {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #e0d0c3;
+  cursor: pointer;
+  position: relative;
+}
+
+.notif-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #c41e3a;
+  color: white;
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.notif-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: #4d2f25;
+  border: 2px solid #e0d0c3;
+  border-radius: 16px;
+  padding: 12px 0;
+  min-width: 280px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  animation: slideDown 0.4s ease;
+}
+
+.notif-item {
+  padding: 12px 20px;
+  color: #e0d0c3;
+  font-size: 15px;
+  border-bottom: 1px solid rgba(224,208,195,0.2);
+}
+
+.notif-item:last-child { border: none; }
+
+.user-info {
+  text-align: right;
+  color: #e0d0c3;
+  line-height: 1.4;
+}
+
+.user-name {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.user-role {
+  font-size: 14px;
+  opacity: 0.8;
+  letter-spacing: 0.1em;
+}
+
+.user-time {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* КОЛОКОЛЬЧИК — НАСТОЯЩИЙ, КРАСИВЫЙ */
+.notif-bell {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #e0d0c3;
+  cursor: pointer;
+  position: relative;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.notif-bell:hover {
+  background: rgba(224, 208, 195, 0.2);
+  transform: scale(1.15);
+}
+
+/* ТАЙМЕР — КАК НА ТВОЁМ РИСУНКЕ */
+.shift-timer {
+  text-align: center;
+  padding: 8px 40px;
+  background: rgba(224, 208, 195, 0.12);
+  border-radius: 30px;
+  border: 2px solid rgba(224, 208, 195, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.timer-label {
+  font-family: "Cinzel", serif;
+  font-size: 15px;
+  color: #e0d0c3;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.9;
+  margin-bottom: 4px;
+}
+
+.timer-value {
+  font-family: "Cinzel", serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #f7ede3;
+  letter-spacing: 0.08em;
+  text-shadow: 0 4px 15px rgba(77, 47, 37, 0.4);
+}
