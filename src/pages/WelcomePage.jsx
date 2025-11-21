@@ -5,20 +5,20 @@ import { USERS } from "../data/users";
 import { DAILY_QUOTES } from "../data/quotes";
 import { YESTERDAY_STATS } from "../data/stats";
 
-// Иконки ролей (используем Unicode-символы, чтобы не тянуть библиотеку)
-const ROLE_ICONS = {
-  "Официант": "🍽️",
-  "Администратор": "🔑",
+// Эмодзи-аватары для каждой роли — чистый люкс
+const ROLE_EMOJI = {
+  "Официант": "🤵🏻",
+  "Администратор": "🧔🏻‍♂️",
   "Хозяин": "👑",
 };
 
 export default function WelcomePage() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [quote] = useState(() => {
-    return DAILY_QUOTES[Math.floor(Math.random() * DAILY_QUOTES.length)];
-  });
-  const [avatarLoaded, setAvatarLoaded] = useState(false);
+  const [quote] = useState(() =>
+    DAILY_QUOTES[Math.floor(Math.random() * DAILY_QUOTES.length)]
+  );
+  const [avatarVisible, setAvatarVisible] = useState(false);
 
   useEffect(() => {
     const savedId = localStorage.getItem("userId");
@@ -28,6 +28,12 @@ export default function WelcomePage() {
       navigate("/");
     }
   }, [navigate]);
+
+  useEffect(() => {
+    // Анимация появления аватара через 300мс
+    const timer = setTimeout(() => setAvatarVisible(true), 300);
+    return () => clearTimeout(timer);
+  }, []);
 
   if (!user) return null;
 
@@ -43,25 +49,17 @@ export default function WelcomePage() {
   return (
     <div className="welcome-screen">
       {/* Большая фоновая иконка роли */}
-      <div className="role-icon-bg">{ROLE_ICONS[user.role]}</div>
+      <div className="role-icon-bg">{ROLE_EMOJI[user.role]}</div>
 
       <div className="welcome-card">
-        {/* Фото с анимацией появления */}
-        <div className={`avatar-wrapper ${avatarLoaded ? "avatar-visible" : ""}`}>
-          <img
-            src={`/avatars/${user.id}.jpg`}
-            alt={user.name}
-            className="avatar"
-            onLoad={() => setAvatarLoaded(true)}
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = "/avatars/default.jpg";
-              setAvatarLoaded(true);
-            }}
-          />
+        {/* ЭМОДЗИ-АВАТАР — ЛЮКС 2025 */}
+        <div className={`avatar-wrapper ${avatarVisible ? "avatar-visible" : ""}`}>
+          <div className="emoji-avatar">
+            <span className="role-emoji">{ROLE_EMOJI[user.role]}</span>
+          </div>
         </div>
 
-        {/* Приветствие с ролью и именем */}
+        {/* Приветствие */}
         <div className="welcome-greeting">
           <h2 className="welcome-subtitle">Приветствую</h2>
           <h1 className="welcome-title">
@@ -73,7 +71,7 @@ export default function WelcomePage() {
           </p>
         </div>
 
-        {/* Цитата дня - курсивом, бежевый цвет */}
+        {/* Цитата дня */}
         <p className="daily-quote">"{quote}"</p>
 
         {/* Дата и смена */}
@@ -88,7 +86,7 @@ export default function WelcomePage() {
           </div>
         </div>
 
-        {/* Статистика только если вчера работал */}
+        {/* Статистика за вчера (если была) */}
         {yesterday && (
           <div className="stats-card">
             <h4 className="stats-title">Вчера вы обслужили:</h4>
