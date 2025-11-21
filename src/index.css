@@ -729,3 +729,244 @@ body {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-20px) rotate(8deg); }
 }
+
+
+/* === СТРАНИЦА СТОЛОВ — ПОЛНЫЙ ЭКРАН, КАК ТЫ ХОТЕЛ === */
+.tables-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #4d2f25 0%, #2f1b15 40%, #e0d0c3 100%);
+  color: #f7ede3;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Шапка — фиксированная, как и было */
+.tables-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: rgba(77, 47, 37, 0.95);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(224, 208, 195, 0.3);
+}
+
+.logo {
+  font-family: "Cinzel", serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #e0d0c3;
+  letter-spacing: 0.2em;
+}
+
+.header-nav {
+  display: flex;
+  gap: 20px;
+  background: rgba(224, 208, 195, 0.15);
+  padding: 12px 32px;
+  border-radius: 30px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(224, 208, 195, 0.3);
+}
+
+.nav-btn {
+  background: none;
+  border: none;
+  color: #e0d0c3;
+  font-family: "Tenor Sans", sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  letter-spacing: 0.1em;
+  position: relative;
+}
+
+.nav-btn.active {
+  background: #e0d0c3;
+  color: #4d2f25;
+  font-weight: 700;
+  box-shadow: 0 10px 30px rgba(77, 47, 37, 0.3);
+  transform: translateY(-2px);
+}
+
+.nav-btn:hover:not(.active) {
+  background: rgba(224, 208, 195, 0.25);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* КАРТА — НА ВЕСЬ ЭКРАН! */
+.tables-map {
+  position: fixed;
+  top: 80px;     /* ниже шапки */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: calc(100vh - 80px);
+  z-index: 10;
+}
+
+.hall-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(224, 208, 195, 0.08);
+  border-radius: 0; /* убрали скругление, чтобы по краям не было белых полос */
+  overflow: hidden;
+}
+
+/* Столы — теперь идеально по всему экрану */
+.table-btn {
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  background: linear-gradient(135deg, #4d2f25, #3b2118);
+  color: #e0d0c3;
+  border: 8px solid #e0d0c3;
+  border-radius: 50%;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 20px 50px rgba(77, 47, 37, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+  z-index: 20;
+}
+
+.table-btn:hover {
+  transform: translate(-50%, -50%) scale(1.22);
+  background: linear-gradient(135deg, #e0d0c3, #d4b8a2);
+  color: #4d2f25;
+  border-color: #4d2f25;
+  box-shadow: 0 35px 70px rgba(77, 47, 37, 0.7);
+  font-weight: 800;
+}
+
+/* МОДАЛЬНОЕ ОКНО подтвердиь/отмена*/
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal {
+  background: #f7ede3;
+  padding: 50px 40px;
+  border-radius: 36px;
+  text-align: center;
+  max-width: 460px;
+  width: 90%;
+  box-shadow: 0 40px 100px rgba(77, 47, 37, 0.6);
+  border: 3px solid #4d2f25;
+  position: relative;
+  overflow: hidden;
+}
+
+.modal h2 {
+  font-family: "Cinzel", serif;
+  font-size: 32px;
+  color: #4d2f25;
+  margin-bottom: 24px;
+  letter-spacing: 0.1em;
+}
+
+.modal p {
+  font-size: 19px;
+  color: #4d2f25;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.highlight-table {
+  background: #4d2f25;
+  color: #e0d0c3;
+  padding: 10px 20px;
+  border-radius: 16px;
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: 0.1em;
+  display: inline-block;
+  margin: 8px 0;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+}
+
+/* КНОПКА "ОТМЕНА" — бежевая заливка + кофейная рамка */
+.btn-cancel {
+  flex: 1;
+  padding: 18px;
+  background: #e0d0c3;
+  color: #4d2f25;
+  border: 4px solid #4d2f25;
+  border-radius: 24px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.btn-cancel:hover {
+  background: #d4b8a2;
+  transform: translateY(-4px);
+  box-shadow: 0 15px 30px rgba(77, 47, 37, 0.3);
+}
+
+.btn-cancel:active {
+  transform: translateY(-1px);
+}
+
+/* КНОПКА "ПОДТВЕРДИТЬ" — кофейная заливка + бежевая рамка */
+.btn-confirm {
+  flex: 1;
+  padding: 18px;
+  background: #4d2f25;
+  color: #e0d0c3;
+  border: 4px solid #e0d0c3;
+  border-radius: 24px;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  box-shadow: 0 10px 30px rgba(77, 47, 37, 0.4);
+}
+
+.btn-confirm:hover {
+  background: #3b2118;
+  border-color: #f7ede3;
+  color: white;
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(77, 47, 37, 0.6);
+}
+
+.btn-confirm:active {
+  transform: translateY(-2px);
+}

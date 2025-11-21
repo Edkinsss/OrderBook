@@ -107,7 +107,7 @@ export default function WelcomePage() {
 
         <button
           className="start-shift-btn"
-          onClick={() => navigate("/dashboard")}
+          onClick={() => navigate("/tables")}
         >
           Начать рабочую сессию
         </button>
