@@ -12,7 +12,7 @@ const ROLE_EMOJI = {
   "Хозяин": "👑",
 };
 
-export default function WelcomePage() {
+export default function WelcomePage() { 
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [quote] = useState(() =>
