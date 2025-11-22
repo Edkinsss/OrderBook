@@ -816,47 +816,58 @@ body {
   z-index: 10;
 }
 
+/* РЕАЛЬНЫЙ ЗАЛ — КАК НА РИСУНКЕ */
 .hall-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   width: 100%;
   height: 100%;
-  background: rgba(224, 208, 195, 0.08);
-  border-radius: 0; /* убрали скругление, чтобы по краям не было белых полос */
+  background: linear-gradient(135deg, #2f1b15 0%, #4d2f25 50%, #3b2118 100%);
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(224,208,195,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(224,208,195,0.06) 0%, transparent 50%);
   overflow: hidden;
 }
 
 /* Столы — теперь идеально по всему экрану */
+/* Разные типы столов */
 .table-btn {
   position: absolute;
-  width: 110px;
-  height: 110px;
-  background: linear-gradient(135deg, #4d2f25, #3b2118);
-  color: #e0d0c3;
-  border: 8px solid #e0d0c3;
-  border-radius: 50%;
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  box-shadow: 0 20px 50px rgba(77, 47, 37, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   transform: translate(-50%, -50%);
-  z-index: 20;
+  border: 8px solid #e0d0c3;
+  color: #e0d0c3;
+  font-weight: 700;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  z-index: 10;
 }
 
-.table-btn:hover {
+.table-btn.round { width: 100px; height: 100px; border-radius: 50%; background: #4d2f25; }
+.table-btn.square { width: 110px; height: 110px; border-radius: 20px; background: #3b2118; }
+.table-btn.rect { width: 140px; height: 90px; border-radius: 20px; background: #4d2f25; }
+.table-btn.sofa { width: 180px; height: 90px; border-radius: 50px; background: #5d3f33; font-size: 18px; }
+.table-btn.counter { 
+  width: 160px; height: 80px; background: #2c1810; border: 6px solid #d4b8a2; color: #d4b8a2; 
+  font-size: 16px; cursor: default; opacity: 0.8;
+}
+
+.table-btn:hover:not(.counter) {
+  transform: translate(-50%, -50%) scale(1.2) !important;
+  background: #e0d0c3 !important;
+  color: #4d2f25 !important;
+  border-color: #4d2f25 !important;
+  box-shadow: 0 30px 70px rgba(77,47,37,0.8);
+}
+
+ .table-btn:hover {
   transform: translate(-50%, -50%) scale(1.22);
   background: linear-gradient(135deg, #e0d0c3, #d4b8a2);
   color: #4d2f25;
   border-color: #4d2f25;
   box-shadow: 0 35px 70px rgba(77, 47, 37, 0.7);
   font-weight: 800;
-}
+} 
 
 /* МОДАЛЬНОЕ ОКНО подтвердиь/отмена*/
 .modal-overlay {
@@ -1138,3 +1149,63 @@ body {
   letter-spacing: 0.08em;
   text-shadow: 0 4px 15px rgba(77, 47, 37, 0.4);
 }
+
+.tables-page-perfect { min-height: 100vh; background: #2f1b15; }
+.perfect-split { display: flex; height: calc(100vh - 90px); }
+
+/* ЛЕВАЯ ЧАСТЬ — ЧИСТЫЙ ЗАЛ */
+.hall-only {
+  flex: 1;
+  background: linear-gradient(135deg, #3b2118 0%, #4d2f25 70%);
+  position: relative;
+}
+.hall-bg-only {
+  position: absolute;
+  inset: 0;
+}
+
+/* ПРАВАЯ ЧАСТЬ — ЧИСТАЯ ЛЕГЕНДА */
+.legend-only {
+  width: 500px;
+  background: #f7ede3;
+  padding: 60px 40px;
+  border-left: 8px solid #e0d0c3;
+}
+.legend-content h2 {
+  font-family: "Cinzel", serif;
+  font-size: 42px;
+  color: #4d2f25;
+  text-align: center;
+  margin-bottom: 60px;
+  letter-spacing: 0.2em;
+}
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.card {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 24px;
+  background: rgba(77,47,37,0.05);
+  border-radius: 32px;
+  border: 3px solid #e0d0c3;
+}
+.card.vip { border-color: #d4b8a2; background: rgba(212,184,162,0.1); }
+.icon {
+  width: 90px; height: 90px;
+  background: #4d2f25;
+  border: 8px solid #e0d0c3;
+  flex-shrink: 0;
+}
+.icon.round { border-radius: 50%; }
+.icon.square { border-radius: 20px; }
+.icon.rect, .icon.rect-vip { border-radius: 20px; width: 120px; }
+.icon.oval { border-radius: 50%; width: 130px; }
+.icon.sofa { border-radius: 50px; width: 140px; }
+.card strong { font-size: 22px; color: #4d2f25; display: block; margin-bottom: 6px; }
+.card p { color: #6b4a3a; font-size: 17px; font-style: italic; }
+
+
