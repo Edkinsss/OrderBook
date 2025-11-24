@@ -1,6 +1,6 @@
 // src/data/stats.js
 export const YESTERDAY_STATS = {
-  "39": { tables: 28, revenue: 48000 },
+  "39": { tables: 18, revenue: 48000 },
   "35": { tables: 19, revenue: 31200 },
   "31": { tables: 33, revenue: 59000 },
 
