@@ -155,7 +155,7 @@ export default function TablesPage() {
               }}
               onClick={() => table.type !== "counter" && handleTableClick(table.id)}
             >
-              {table.label || table.id}
+              {table.label || table.id} 
             </button>
           ))}
         </div>
