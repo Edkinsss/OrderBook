@@ -731,13 +731,67 @@ body {
 }
 
 
-/* === СТРАНИЦА СТОЛОВ — ПОЛНЫЙ ЭКРАН, КАК ТЫ ХОТЕЛ === */
+/* === СТРАНИЦА СТОЛОВ — ПРЕМИАЛЬНАЯ СТРУКТУРА 50/50 === */
 .tables-page {
   min-height: 100vh;
   background: linear-gradient(135deg, #4d2f25 0%, #2f1b15 40%, #e0d0c3 100%);
   color: #f7ede3;
   position: relative;
   overflow: hidden;
+}
+
+/* ОСНОВНОЙ КОНТЕНТ — НА ВСЮ СТРАНИЦУ 50/50 */
+.tables-content {
+  display: flex;
+  height: 100vh;
+  margin-top: 90px;
+  position: relative;
+  width: 100vw;
+}
+
+/* ЛЕВАЯ ПОЛОВИНА — КАРТА ЗАЛА (50%, НА ВСЮ ВЫСОТУ) */
+.hall-section {
+  width: 50%;
+  height: 100%;
+  position: relative;
+  background: #4d2f25;
+  background-image: 
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 4px,
+      rgba(47, 27, 21, 0.4) 4px,
+      rgba(47, 27, 21, 0.4) 8px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 6px,
+      rgba(59, 33, 24, 0.3) 6px,
+      rgba(59, 33, 24, 0.3) 12px
+    ),
+    radial-gradient(circle at 30% 40%, rgba(224,208,195,0.1) 0%, transparent 60%),
+    radial-gradient(circle at 70% 60%, rgba(224,208,195,0.08) 0%, transparent 60%);
+  overflow: hidden;
+  box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.5);
+}
+
+.hall-bg {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tables-container {
+  position: relative;
+  width: 80%;
+  max-width: 90%;
+  height: 100%;
+  margin-bottom: 140px;
+  margin-left: 120px;
 }
 
 /* Шапка — фиксированная, как и было */
@@ -804,69 +858,281 @@ body {
   transform: translateY(-2px);
 }
 
-/* КАРТА — НА ВЕСЬ ЭКРАН! */
-.tables-map {
-  position: fixed;
-  top: 80px;     /* ниже шапки */
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100vw;
-  height: calc(100vh - 80px);
-  z-index: 10;
-}
-
-/* РЕАЛЬНЫЙ ЗАЛ — КАК НА РИСУНКЕ */
-.hall-bg {
-  position: relative;
-  width: 100%;
+/* ПРАВАЯ ПОЛОВИНА — ЛЕГЕНДА СТОЛОВ (50%, БЕЖЕВАЯ, НА ВСЮ ВЫСОТУ) */
+.legend-section {
+  width: 50%;
   height: 100%;
-  background: linear-gradient(135deg, #2f1b15 0%, #4d2f25 50%, #3b2118 100%);
-  background-image: 
-    radial-gradient(circle at 20% 80%, rgba(224,208,195,0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(224,208,195,0.06) 0%, transparent 50%);
-  overflow: hidden;
+  background: #f7ede3;
+  border-left: 6px solid #4d2f25;
+  padding: 50px 40px;
+  overflow-y: auto;
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
 }
 
-/* Столы — теперь идеально по всему экрану */
-/* Разные типы столов */
+.legend-content {
+  font-family: "Tenor Sans", sans-serif;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.legend-title {
+  font-family: "Cinzel", serif;
+  font-size: 42px;
+  color: #4d2f25;
+  text-align: center;
+  margin-bottom: 50px;
+  letter-spacing: 0.2em;
+  font-weight: 700;
+  text-shadow: 0 2px 8px rgba(77, 47, 37, 0.1);
+}
+
+.legend-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.legend-card {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 28px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 28px;
+  border: 3px solid rgba(77, 47, 37, 0.25);
+  transition: all 0.35s ease;
+  box-shadow: 0 6px 16px rgba(77, 47, 37, 0.12);
+}
+
+.legend-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(77, 47, 37, 0.25);
+  border-color: rgba(77, 47, 37, 0.5);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.legend-icon {
+  width: 110px;
+  height: 110px;
+  background: linear-gradient(145deg, #f7ede3 0%, #e0d0c3 100%);
+  border: 6px solid #4d2f25;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 
+    0 8px 24px rgba(77, 47, 37, 0.35),
+    inset 0 3px 10px rgba(255, 255, 255, 0.5);
+}
+
+.legend-icon.round {
+  border-radius: 50%;
+}
+
+.legend-icon.square {
+  border-radius: 30px;
+}
+
+.legend-icon.rect {
+  width: 140px;
+  border-radius: 30px;
+}
+
+.legend-icon.oval {
+  border-radius: 50%;
+  width: 140px;
+}
+
+.legend-icon.vip {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  border-color: #d4af37;
+  box-shadow: 
+    0 8px 24px rgba(212, 175, 55, 0.4),
+    0 0 20px rgba(212, 175, 55, 0.3),
+    inset 0 3px 10px rgba(255, 255, 255, 0.5);
+}
+
+.legend-emoji {
+  font-size: 52px;
+  filter: drop-shadow(0 3px 6px rgba(77, 47, 37, 0.25));
+}
+
+.legend-info {
+  flex: 1;
+}
+
+.legend-name {
+  font-family: "Cinzel", serif;
+  font-size: 24px;
+  color: #4d2f25;
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.legend-description {
+  font-family: "Tenor Sans", sans-serif;
+  color: #6b4a3a;
+  font-size: 17px;
+  font-style: italic;
+  margin: 0;
+  opacity: 0.9;
+  line-height: 1.5;
+}
+
+/* СТОЛЫ — ПРЕМИАЛЬНЫЙ ДИЗАЙН */
 .table-btn {
   position: absolute;
   transform: translate(-50%, -50%);
-  border: 8px solid #e0d0c3;
-  color: #e0d0c3;
-  font-weight: 700;
-  font-size: 22px;
+  border: none;
   cursor: pointer;
-  transition: all 0.4s ease;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Cinzel", serif;
+  letter-spacing: 0.05em;
 }
 
-.table-btn.round { width: 100px; height: 100px; border-radius: 50%; background: #4d2f25; }
-.table-btn.square { width: 110px; height: 110px; border-radius: 20px; background: #3b2118; }
-.table-btn.rect { width: 140px; height: 90px; border-radius: 20px; background: #4d2f25; }
-.table-btn.sofa { width: 180px; height: 90px; border-radius: 50px; background: #5d3f33; font-size: 18px; }
-.table-btn.counter { 
-  width: 160px; height: 80px; background: #2c1810; border: 6px solid #d4b8a2; color: #d4b8a2; 
-  font-size: 16px; cursor: default; opacity: 0.8;
-}
-
-.table-btn:hover:not(.counter) {
-  transform: translate(-50%, -50%) scale(1.2) !important;
-  background: #e0d0c3 !important;
-  color: #4d2f25 !important;
-  border-color: #4d2f25 !important;
-  box-shadow: 0 30px 70px rgba(77,47,37,0.8);
-}
-
- .table-btn:hover {
-  transform: translate(-50%, -50%) scale(1.22);
-  background: linear-gradient(135deg, #e0d0c3, #d4b8a2);
+.table-number {
+  font-size: 22px;
+  font-weight: 700;
   color: #4d2f25;
-  border-color: #4d2f25;
-  box-shadow: 0 35px 70px rgba(77, 47, 37, 0.7);
-  font-weight: 800;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.6);
+  z-index: 1;
+}
+
+/* КРУГЛЫЙ СТОЛ (на 2 персоны) */
+.table-btn.round { 
+  width: 130px; 
+  height: 130px; 
+  border-radius: 50%; 
+  background: linear-gradient(145deg, #f7ede3 0%, #e0d0c3 50%, #d4b8a2 100%);
+  border: 6px solid #4d2f25;
+  box-shadow: 
+    0 12px 35px rgba(77, 47, 37, 0.6),
+    inset 0 4px 12px rgba(255, 255, 255, 0.5),
+    inset 0 -4px 12px rgba(77, 47, 37, 0.2);
+}
+
+/* КВАДРАТНЫЙ СТОЛ (на 4 персоны) */
+.table-btn.square { 
+  width: 140px; 
+  height: 140px; 
+  border-radius: 30px; 
+  background: linear-gradient(145deg, #f7ede3 0%, #e0d0c3 50%, #d4b8a2 100%);
+  border: 6px solid #4d2f25;
+  box-shadow: 
+    0 12px 35px rgba(77, 47, 37, 0.6),
+    inset 0 4px 12px rgba(255, 255, 255, 0.5),
+    inset 0 -4px 12px rgba(77, 47, 37, 0.2);
+}
+
+/* ПРЯМОУГОЛЬНЫЙ ДЛИННЫЙ СТОЛ (на 6 персон) */
+.table-btn.rect { 
+  width: 180px; 
+  height: 120px; 
+  border-radius: 30px; 
+  background: linear-gradient(145deg, #f7ede3 0%, #e0d0c3 50%, #d4b8a2 100%);
+  border: 6px solid #4d2f25;
+  box-shadow: 
+    0 12px 35px rgba(77, 47, 37, 0.6),
+    inset 0 4px 12px rgba(255, 255, 255, 0.5),
+    inset 0 -4px 12px rgba(77, 47, 37, 0.2);
+}
+
+/* ОВАЛЬНЫЙ СТОЛ (на 4–5 персон) */
+.table-btn.oval { 
+  width: 160px; 
+  height: 110px; 
+  border-radius: 50%; 
+  background: linear-gradient(145deg, #f7ede3 0%, #e0d0c3 50%, #d4b8a2 100%);
+  border: 6px solid #4d2f25;
+  box-shadow: 
+    0 12px 35px rgba(77, 47, 37, 0.6),
+    inset 0 4px 12px rgba(255, 255, 255, 0.5),
+    inset 0 -4px 12px rgba(77, 47, 37, 0.2);
+}
+
+/* VIP-СТОЛ (шестиугольник, на 6 персон, диваны) */
+.table-btn.vip {
+  width: 150px;
+  height: 150px;
+  background: linear-gradient(145deg, #f7ede3 0%, #e0d0c3 50%, #d4b8a2 100%);
+  border: 6px solid #d4af37;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  box-shadow: 
+    0 12px 35px rgba(212, 175, 55, 0.5),
+    0 0 25px rgba(212, 175, 55, 0.4),
+    inset 0 4px 12px rgba(255, 255, 255, 0.5),
+    inset 0 -4px 12px rgba(77, 47, 37, 0.2);
+  animation: vipPulse 3s ease-in-out infinite;
+  position: relative;
+}
+
+.table-btn.vip::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  background: linear-gradient(145deg, #d4af37, #b8941f);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  z-index: -1;
+  opacity: 0.3;
+  animation: vipGlow 3s ease-in-out infinite;
+}
+
+@keyframes vipPulse {
+  0%, 100% {
+    box-shadow: 
+      0 12px 35px rgba(212, 175, 55, 0.5),
+      0 0 25px rgba(212, 175, 55, 0.4),
+      inset 0 4px 12px rgba(255, 255, 255, 0.5),
+      inset 0 -4px 12px rgba(77, 47, 37, 0.2);
+  }
+  50% {
+    box-shadow: 
+      0 18px 45px rgba(212, 175, 55, 0.7),
+      0 0 35px rgba(212, 175, 55, 0.6),
+      inset 0 4px 12px rgba(255, 255, 255, 0.6),
+      inset 0 -4px 12px rgba(77, 47, 37, 0.2);
+  }
+}
+
+@keyframes vipGlow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05);
+  }
+}
+
+/* HOVER ЭФФЕКТЫ — УВЕЛИЧЕНИЕ И ПОДЪЕМ */
+.table-btn:hover {
+  transform: translate(-50%, -50%) scale(1.2) translateY(-15px) !important;
+  background: linear-gradient(145deg, #ffffff 0%, #f7ede3 50%, #e0d0c3 100%) !important;
+  border-color: #4d2f25 !important;
+  border-width: 8px !important;
+  box-shadow: 
+    0 30px 70px rgba(77, 47, 37, 0.8),
+    0 0 50px rgba(224, 208, 195, 0.6),
+    inset 0 5px 18px rgba(255, 255, 255, 0.7),
+    inset 0 -5px 18px rgba(77, 47, 37, 0.2);
+  z-index: 20;
+}
+
+.table-btn.vip:hover {
+  border-color: #d4af37 !important;
+  box-shadow: 
+    0 30px 70px rgba(212, 175, 55, 0.8),
+    0 0 60px rgba(212, 175, 55, 0.7),
+    inset 0 5px 18px rgba(255, 255, 255, 0.7),
+    inset 0 -5px 18px rgba(77, 47, 37, 0.2);
 } 
 
 /* МОДАЛЬНОЕ ОКНО подтвердиь/отмена*/
@@ -910,15 +1176,16 @@ body {
 }
 
 .highlight-table {
-  background: #4d2f25;
-  color: #e0d0c3;
+  background: #e0d0c3;
+  color: #4d2f25;
   padding: 10px 20px;
   border-radius: 16px;
   font-weight: 800;
   font-size: 26px;
   letter-spacing: 0.1em;
   display: inline-block;
-  margin: 8px 0;
+  margin: 8px 4px;
+  box-shadow: 0 4px 12px rgba(77, 47, 37, 0.2);
 }
 
 .modal-actions {
@@ -1028,6 +1295,7 @@ body {
 }
 
 .notif-bell {
+  font-family: "Tenor Sans", sans-serif;
   background: none;
   border: none;
   font-size: 28px;
@@ -1167,13 +1435,14 @@ body {
 /* ПРАВАЯ ЧАСТЬ — ЧИСТАЯ ЛЕГЕНДА */
 .legend-only {
   width: 500px;
+  
   background: #f7ede3;
   padding: 60px 40px;
   border-left: 8px solid #e0d0c3;
 }
 .legend-content h2 {
   font-family: "Cinzel", serif;
-  font-size: 42px;
+  font-size: 52px;
   color: #4d2f25;
   text-align: center;
   margin-bottom: 60px;
@@ -1207,5 +1476,468 @@ body {
 .icon.sofa { border-radius: 50px; width: 140px; }
 .card strong { font-size: 22px; color: #4d2f25; display: block; margin-bottom: 6px; }
 .card p { color: #6b4a3a; font-size: 17px; font-style: italic; }
+
+/* === ДЕКОРАТИВНЫЕ ЭЛЕМЕНТЫ — КРАСИВЫЕ === */
+.decoration {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 5;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
+  transition: all 0.3s ease;
+}
+
+.decoration.plant {
+  opacity: 0.75;
+  animation: plantSway 5s ease-in-out infinite;
+  filter: drop-shadow(0 4px 10px rgba(34, 139, 34, 0.3));
+}
+
+.decoration.tv {
+  font-size: 32px;
+  opacity: 0.65;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+}
+
+.decoration:hover {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+@keyframes plantSway {
+  0%, 100% { 
+    transform: translate(-50%, -50%) rotate(-3deg) scale(1); 
+  }
+  50% { 
+    transform: translate(-50%, -50%) rotate(3deg) scale(1.05); 
+  }
+}
+
+/* Стрелка входа — КРАСИВАЯ */
+.entrance-arrow {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-size: 56px;
+  color: #d4b8a2;
+  z-index: 8;
+  opacity: 0.85;
+  animation: arrowPulse 2.5s ease-in-out infinite;
+  pointer-events: none;
+  filter: drop-shadow(0 4px 12px rgba(212, 184, 162, 0.5));
+  font-weight: bold;
+}
+
+@keyframes arrowPulse {
+  0%, 100% { 
+    opacity: 0.7; 
+    transform: translate(-50%, -50%) translateX(0) scale(1); 
+  }
+  50% { 
+    opacity: 1; 
+    transform: translate(-50%, -50%) translateX(12px) scale(1.1); 
+  }
+}
+
+/* === АДАПТИВНОСТЬ ДЛЯ НОВОЙ СТРУКТУРЫ === */
+/* === АДАПТИВНОСТЬ ПОД ПЛАНШЕТ (< 1024px) === */
+@media (max-width: 1024px) {
+  .tables-content {
+    flex-direction: column;
+    height: calc(100vh - 90px);
+    min-height: calc(100vh - 90px);
+  }
+
+  .hall-section {
+    width: 100%;
+    height: 60%;
+    min-height: 500px;
+  }
+
+  .legend-section {
+    width: 100%;
+    height: 40%;
+    border-left: none;
+    border-top: 6px solid #4d2f25;
+    padding: 35px 28px;
+  }
+
+  .legend-title {
+    font-size: 32px;
+    margin-bottom: 30px;
+  }
+
+  .legend-cards {
+    gap: 20px;
+  }
+
+  .legend-card {
+    padding: 22px;
+    gap: 22px;
+  }
+
+  .legend-icon {
+    width: 90px;
+    height: 90px;
+  }
+
+  .legend-icon.rect,
+  .legend-icon.oval {
+    width: 120px;
+  }
+
+  .legend-emoji {
+    font-size: 42px;
+  }
+
+  .legend-name {
+    font-size: 20px;
+  }
+
+  .legend-description {
+    font-size: 15px;
+  }
+
+  .table-btn {
+    transform: scale(0.85);
+  }
+
+  .table-btn.round { 
+    width: 110px; 
+    height: 110px; 
+  }
+
+  .table-btn.square { 
+    width: 120px; 
+    height: 120px; 
+  }
+
+  .table-btn.rect { 
+    width: 155px; 
+    height: 105px; 
+  }
+
+  .table-btn.oval { 
+    width: 135px; 
+    height: 95px; 
+  }
+
+  .table-btn.vip {
+    width: 130px;
+    height: 130px;
+  }
+
+  .table-number {
+    font-size: 20px;
+  }
+}
+
+/* === АДАПТИВНОСТЬ ПОД ПЛАНШЕТ === */
+@media (max-width: 1024px) {
+  .tables-header-v2 {
+    height: 80px;
+    padding: 0 24px;
+  }
+
+  .logo {
+    font-size: 24px;
+  }
+
+  .shift-timer {
+    padding: 6px 24px;
+  }
+
+  .timer-label {
+    font-size: 12px;
+  }
+
+  .timer-value {
+    font-size: 24px;
+  }
+
+  .header-right {
+    gap: 20px;
+  }
+
+  .header-nav {
+    padding: 8px 20px;
+    gap: 12px;
+  }
+
+  .nav-btn {
+    font-size: 14px;
+    padding: 8px 20px;
+  }
+
+  .user-info {
+    font-size: 14px;
+  }
+
+  .user-name {
+    font-size: 16px;
+  }
+
+  .user-role {
+    font-size: 12px;
+  }
+
+  .user-time {
+    font-size: 11px;
+  }
+
+  .tables-map {
+    top: 80px;
+    height: calc(100vh - 80px);
+  }
+
+  .table-btn {
+    font-size: 18px;
+  }
+
+  .table-btn.round { 
+    width: 80px; 
+    height: 80px; 
+  }
+  .table-btn.square { 
+    width: 90px; 
+    height: 90px; 
+  }
+  .table-btn.rect { 
+    width: 120px; 
+    height: 75px; 
+  }
+  .table-btn.sofa { 
+    width: 150px; 
+    height: 75px; 
+    font-size: 16px;
+  }
+  .table-btn.counter { 
+    width: 140px; 
+    height: 70px; 
+    font-size: 14px;
+  }
+  .table-btn.entrance {
+    width: 120px;
+    height: 70px;
+    font-size: 14px;
+  }
+
+  .decoration {
+    font-size: 20px !important;
+  }
+
+  .entrance-arrow {
+    font-size: 36px;
+  }
+
+  .modal {
+    padding: 40px 32px;
+    max-width: 400px;
+  }
+
+  .modal h2 {
+    font-size: 28px;
+  }
+
+  .modal p {
+    font-size: 17px;
+  }
+
+  .highlight-table {
+    font-size: 22px;
+    padding: 8px 16px;
+  }
+
+  .btn-cancel,
+  .btn-confirm {
+    padding: 14px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .tables-header-v2 {
+    height: 70px;
+    padding: 0 16px;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-size: 20px;
+    letter-spacing: 0.1em;
+  }
+
+  .shift-timer {
+    padding: 4px 16px;
+    order: 3;
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .timer-label {
+    font-size: 10px;
+  }
+
+  .timer-value {
+    font-size: 20px;
+  }
+
+  .header-right {
+    gap: 12px;
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .header-nav {
+    padding: 6px 12px;
+    gap: 8px;
+  }
+
+  .nav-btn {
+    font-size: 12px;
+    padding: 6px 16px;
+  }
+
+  .user-info {
+    font-size: 12px;
+  }
+
+  .user-name {
+    font-size: 14px;
+  }
+
+  .user-role {
+    font-size: 10px;
+  }
+
+  .user-time {
+    font-size: 10px;
+  }
+
+  .tables-content {
+    flex-direction: column;
+    height: calc(100vh - 70px);
+    margin-top: 70px;
+  }
+
+  .hall-section {
+    height: 50vh;
+    min-height: 400px;
+  }
+
+  .legend-section {
+    width: 100%;
+    height: auto;
+    max-height: 50vh;
+    padding: 24px 20px;
+  }
+
+  .legend-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .legend-cards {
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .legend-card {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .legend-icon {
+    width: 70px;
+    height: 70px;
+  }
+
+  .legend-icon.rect,
+  .legend-icon.oval {
+    width: 90px;
+  }
+
+  .legend-emoji {
+    font-size: 32px;
+  }
+
+  .legend-name {
+    font-size: 16px;
+  }
+
+  .legend-capacity {
+    font-size: 13px;
+  }
+
+  .vip-section {
+    padding: 16px;
+  }
+
+  .vip-title {
+    font-size: 18px;
+  }
+
+  .vip-description {
+    font-size: 12px;
+  }
+
+  .table-btn {
+    transform: scale(0.8);
+  }
+
+  .table-btn.round { 
+    width: 80px; 
+    height: 80px; 
+  }
+  .table-btn.square { 
+    width: 90px; 
+    height: 90px; 
+  }
+  .table-btn.rect { 
+    width: 120px; 
+    height: 80px; 
+  }
+  .table-btn.oval { 
+    width: 100px; 
+    height: 70px; 
+  }
+
+  .table-number {
+    font-size: 16px;
+  }
+
+  .vip-badge {
+    font-size: 8px;
+    padding: 1px 6px;
+  }
+
+  .modal {
+    padding: 32px 24px;
+    max-width: 90%;
+  }
+
+  .modal h2 {
+    font-size: 24px;
+  }
+
+  .modal p {
+    font-size: 15px;
+  }
+
+  .highlight-table {
+    font-size: 20px;
+    padding: 6px 12px;
+  }
+
+  .modal-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btn-cancel,
+  .btn-confirm {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
 
 

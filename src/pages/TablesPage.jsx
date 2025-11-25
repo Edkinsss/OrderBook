@@ -1,30 +1,61 @@
-// src/pages/TablesPage.jsx — ЧИСТАЯ КРАСОТА, С РАБОЧИМ ВРЕМЕНЕМ
+// src/pages/TablesPage.jsx — ПРЕМИАЛЬНАЯ КАРТА СТОЛОВ
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { USERS } from "../data/users";
 
+// Планировка зала — 12 столов, красиво расположенных (3 ряда по 4 стола, идеально центрированы)
 const TABLES = [
-  // Барная стойка слева
-  { id: "O1", top: "18%", left: "12%", type: "rect", rotation: 90 },
-  { id: "O2", top: "35%", left: "12%", type: "rect", rotation: 90 },
-  { id: "O3", top: "52%", left: "12%", type: "rect", rotation: 90 },
-  // Основной зал
-  { id: "O4", top: "22%", left: "32%", type: "round" },
-  { id: "O5", top: "20%", left: "48%", type: "square" },
-  { id: "O6", top: "25%", left: "65%", type: "round" },
-  { id: "O7", top: "38%", left: "38%", type: "rect" },
-  { id: "O8", top: "40%", left: "55%", type: "round" },
-  { id: "O9", top: "42%", left: "75%", type: "square" },
-  { id: "O10", top: "55%", left: "30%", type: "round" },
-  { id: "O11", top: "58%", left: "48%", type: "rect" },
-  { id: "O12", top: "60%", left: "68%", type: "round" },
-  // VIP-зона / диваны
-  { id: "O13", top: "72%", left: "35%", type: "sofa", rotation: 0 },
-  { id: "O14", top: "75%", left: "55%", type: "round" },
-  { id: "O15", top: "73%", left: "75%", type: "sofa", rotation: 180 },
-  // Кухня / выдача справа
-  { id: "O16", top: "25%", left: "88%", type: "counter", label: "Выдача" },
-  { id: "O17", top: "45%", left: "88%", type: "counter", label: "Кухня" },
+  // Верхний ряд (идеально центрирован в контейнере)
+  { id: "O1", top: "25%", left: "5%", type: "round", capacity: 2 },
+  { id: "O2", top: "25%", left: "27%", type: "square", capacity: 4 },
+  { id: "O3", top: "25%", left: "49%", type: "rect", capacity: 6 },
+  { id: "O4", top: "25%", left: "71%", type: "oval", capacity: 4 },
+  
+  // Средний ряд (идеально центрирован в контейнере)
+  { id: "O5", top: "50%", left: "5%", type: "square", capacity: 4 },
+  { id: "O6", top: "50%", left: "27%", type: "vip", capacity: 6 },
+  { id: "O7", top: "50%", left: "49%", type: "round", capacity: 2 },
+  { id: "O8", top: "50%", left: "71%", type: "rect", capacity: 6 },
+  
+  // Нижний ряд (идеально центрирован в контейнере)
+  { id: "O9", top: "75%", left: "5%", type: "oval", capacity: 5 },
+  { id: "O10", top: "75%", left: "27%", type: "square", capacity: 4 },
+  { id: "O11", top: "75%", left: "49%", type: "round", capacity: 2 },
+  { id: "O12", top: "75%", left: "71%", type: "vip", capacity: 6 },
+];
+
+// Легенда столов
+const TABLE_LEGEND = [
+  { 
+    type: "round", 
+    name: "Круглый стол", 
+    description: "Рассчитан на 2 персоны",
+    // icon: "⭕"
+  },
+  { 
+    type: "square", 
+    name: "Квадратный стол", 
+    description: "Рассчитан на 4 персоны",
+    // icon: "⬜"
+  },
+  { 
+    type: "rect", 
+    name: "Прямоугольный длинный стол", 
+    description: "Рассчитан на 6 персон",
+    // icon: "▭"
+  },
+  { 
+    type: "oval", 
+    name: "Овальный стол", 
+    description: "Рассчитан на 4–5 персон",
+    // icon: "⬯"
+  },
+  { 
+    type: "vip", 
+    name: "VIP-стол", 
+    description: "Рассчитан на 6 персон",
+    // icon: "⬡"
+  },
 ];
 
 export default function TablesPage() {
@@ -33,15 +64,16 @@ export default function TablesPage() {
   const [showModal, setShowModal] = useState(false);
   const [timeLeft, setTimeLeft] = useState("");
   const [currentTime, setCurrentTime] = useState("");
+  const [currentDate, setCurrentDate] = useState("");
   const [notifications, setNotifications] = useState([]);
   const [showNotifs, setShowNotifs] = useState(false);
 
   const userId = localStorage.getItem("userId");
-  const currentUser = userId && USERS[userId] ? USERS[userId] : { name: "Гость", role: "Официант" };
+  const currentUser = userId && USERS[userId] ? USERS[userId] : { name: "Артём", role: "Официант" };
   const userName = currentUser.name;
   const userRole = currentUser.role;
 
-  // ВСЁ ВРЕМЯ — ВЕРНУЛ КАК БЫЛО, КРАСИВО И РАБОЧЕ
+  // Обновление времени и таймера
   useEffect(() => {
     const updateClock = () => {
       const now = new Date();
@@ -52,6 +84,7 @@ export default function TablesPage() {
       // Формат даты: Пн, 22 ноя · 14:21 МСК
       const options = { weekday: "short", day: "numeric", month: "short" };
       const dateStr = now.toLocaleDateString("ru-RU", options);
+      setCurrentDate(dateStr);
 
       // Таймер до конца смены (22:00)
       if (hours >= 9 && hours < 22) {
@@ -96,13 +129,15 @@ export default function TablesPage() {
   };
 
   const confirmTable = () => {
-    setShowModal(false);
-    navigate(`/table/${selectedTable}`);
+    if (selectedTable) {
+      setShowModal(false);
+      navigate(`/table/${selectedTable}`);
+    }
   };
 
   return (
     <div className="tables-page">
-      {/* ШАПКА — ВСЁ РАБОТАЕТ */}
+      {/* ШАПКА */}
       <header className="tables-header-v2">
         <h1 className="logo">OrderBook</h1>
 
@@ -112,10 +147,11 @@ export default function TablesPage() {
         </div>
 
         <div className="header-right">
-          {/* Колокольчик */}
+          {/* Колокольчик уведомлений */}
           <div className="notif-wrapper">
             <button className="notif-bell" onClick={() => setShowNotifs(!showNotifs)}>
-              Bell {notifications.length > 0 && <span className="notif-badge">{notifications.length}</span>}
+              Уведомления
+              {notifications.length > 0 && <span className="notif-badge">{notifications.length}</span>}
             </button>
             {showNotifs && notifications.length > 0 && (
               <div className="notif-dropdown">
@@ -126,48 +162,75 @@ export default function TablesPage() {
             )}
           </div>
 
+          {/* Навигация */}
           <nav className="header-nav">
             <button className="nav-btn active">Столы</button>
             <button className="nav-btn">Расчет</button>
           </nav>
 
+          {/* Информация о пользователе */}
           <div className="user-info">
             <div className="user-name">{userName}</div>
             <div className="user-role">{userRole}</div>
             <div className="user-time">
-              {new Date().toLocaleDateString("ru-RU", { weekday: "short", day: "numeric", month: "short" })} · {currentTime} МСК
+              {currentDate} · {currentTime} МСК
             </div>
           </div>
         </div>
       </header>
 
-      {/* КАРТА ЗАЛА — КРАСИВАЯ, ЧИСТАЯ */}
-      <div className="tables-map">
-        <div className="hall-bg">
-          {TABLES.map((table) => (
-            <button
-              key={table.id}
-              className={`table-btn ${table.type}`}
-              style={{
-                top: table.top,
-                left: table.left,
-                transform: `translate(-50%, -50%) rotate(${table.rotation || 0}deg)`
-              }}
-              onClick={() => table.type !== "counter" && handleTableClick(table.id)}
-            >
-              {table.label || table.id} 
-            </button>
-          ))}
+      {/* ОСНОВНОЙ КОНТЕНТ — ДВА БЛОКА 50/50 */}
+      <div className="tables-content">
+        {/* ЛЕВАЯ ПОЛОВИНА — КАРТА ЗАЛА */}
+        <div className="hall-section">
+          <div className="hall-bg">
+            <div className="tables-container">
+              {TABLES.map((table) => (
+                <button
+                  key={table.id}
+                  className={`table-btn ${table.type}`}
+                  style={{
+                    top: table.top,
+                    left: table.left,
+                  }}
+                  onClick={() => handleTableClick(table.id)}
+                >
+                  <span className="table-number">{table.id}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ПРАВАЯ ПОЛОВИНА — ЛЕГЕНДА СТОЛОВ */}
+        <div className="legend-section">
+          <div className="legend-content">
+            <h2 className="legend-title">Обозначения столов</h2>
+            
+            <div className="legend-cards">
+              {TABLE_LEGEND.map((item) => (
+                <div key={item.type} className="legend-card">
+                  <div className={`legend-icon ${item.type}`}>
+                    <span className="legend-emoji">{item.icon}</span>
+                  </div>
+                  <div className="legend-info">
+                    <strong className="legend-name">{item.name}</strong>
+                    <p className="legend-description">{item.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* МОДАЛКА */}
+      {/* МОДАЛЬНОЕ ОКНО */}
       {showModal && (
-        <div className="modal-overlay">
-          <div className="modal">
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h2>Подтверждение</h2>
             <p>
-              {userName}, вы выбрали стол № <strong className="highlight-table">{selectedTable}</strong>
+              {userName}, вы выбрали стол № <strong className="highlight-table">{selectedTable}</strong>.
               <br />Подтверждаете?
             </p>
             <div className="modal-actions">
