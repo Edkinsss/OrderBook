@@ -48,7 +48,7 @@ const MENU_SECTIONS = {
       "Плов",
       "Сарма",
       "Долма",
-      "Отбивная"
+      "Отбивная куриная"
     ]
   },
   grill: {
@@ -177,7 +177,7 @@ export default function MenuPage() {
       name: itemName,
       price: "", // Пустое поле для цены
       quantity: 1,
-      // image: "", // Комментарий для фото - позже добавим
+      // image: "", // Комментарий для фото
     };
     setOrder(prev => [...prev, newItem]);
   };
