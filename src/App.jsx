@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
 import WelcomePage from "./pages/WelcomePage";
-import TablesPage from "./pages/TablesPage"; // ← Наша новая главная страница со столами
+import TablesPage from "./pages/TablesPage";
+import MenuPage from "./pages/MenuPage";
 
 export default function App() {
   return (
@@ -16,8 +17,8 @@ export default function App() {
         <Route path="/tables" element={<TablesPage />} />
         <Route path="/dashboard" element={<TablesPage />} /> {/* ← дублируем для совместимости */}
 
-        {/* В будущем здесь будут страницы стола, расчёт, меню и т.д. */}
-        <Route path="/table/:id" element={<div className="page">Стол загружается...</div>} />
+        {/* Страница меню для выбранного стола */}
+        <Route path="/table/:id" element={<MenuPage />} />
         <Route path="*" element={<div className="page">404 — Страница не найдена</div>} />
       </Routes>
     </Router>
