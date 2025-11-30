@@ -1,6 +1,7 @@
-// src/pages/ActiveOrdersPage.jsx — РАБОЧИЕ СТОЛЫ (ТОЧНО КАК НА РИСУНКЕ)
+// src/pages/ActiveOrdersPage.jsx — РАБОЧИЕ СТОЛЫ (ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ)
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { USERS } from "../data/users";
 
 export default function ActiveOrdersPage() {
   const navigate = useNavigate();
@@ -21,12 +22,16 @@ export default function ActiveOrdersPage() {
           // Фильтруем заказы только текущего официанта
           const waiterOrders = parsed.filter(order => order.waiterId === currentWaiterId);
           
-          // Подсчитываем total, если его нет
-          const fixed = waiterOrders.map(order => ({
-            ...order,
-            total: order.total || order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0),
-            createdAt: order.createdAt || new Date().toISOString()
-          }));
+          // Подсчитываем total, если его нет, и добавляем имя официанта
+          const fixed = waiterOrders.map(order => {
+            const waiter = USERS[order.waiterId] || { name: "Неизвестно", role: "Официант" };
+            return {
+              ...order,
+              waiterName: waiter.name,
+              total: order.total || order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+              createdAt: order.createdAt || new Date().toISOString()
+            };
+          });
           setOrders(fixed);
         } else {
           setOrders([]);
@@ -51,56 +56,77 @@ export default function ActiveOrdersPage() {
     navigate(`/table/${tableId}`);
   };
 
+  const goToCheckout = (tableId) => {
+    navigate(`/checkout/${tableId}`);
+  };
+
   if (orders.length === 0) {
     return (
-      <div className="active-empty-fullscreen">
-        <h2>У вас нет активных столов</h2>
-        <p>Все столы свободны или заказы ещё не подтверждены</p>
-        <button onClick={() => navigate("/tables")} className="big-btn">
-          ← Вернуться к столам
-        </button>
+      <div className="active-orders-fullscreen">
+        <header className="active-header-lux">
+          <div className="active-logo">OrderBook</div>
+          <h1 className="active-page-title">Рабочие столы</h1>
+        </header>
+        <div className="active-empty-center">
+          <h2>Активных столов нет</h2>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="active-orders-fullscreen">
-      {/* ШАПКА — ФИКСИРОВАННАЯ, ЛОГОТИП СЛЕВА, ЗАГОЛОВОК ПО ЦЕНТРУ */}
+      {/* ШАПКА — ФИКСИРОВАННАЯ, ТЁМНО-КОРИЧНЕВАЯ */}
       <header className="active-header-lux">
         <div className="active-logo">OrderBook</div>
         <h1 className="active-page-title">Рабочие столы</h1>
       </header>
 
-      {/* КАРТОЧКИ ЗАКАЗОВ — ОГРОМНЫЕ, ПО ЦЕНТРУ, ВЕРТИКАЛЬНО */}
-      <div className="orders-container-lux">
+      {/* ГОРИЗОНТАЛЬНАЯ ПОЛОСА СТОЛОВ — СКРОЛЛ ВЛЕВО-ВПРАВО */}
+      <div className="tables-horizontal-scroll">
         {orders.map((order) => (
-          <div key={order.tableId} className="order-card-lux">
-            <div className="card-top-lux">
-              <h2 className="card-table-number">Стол № {order.tableId}</h2>
-              <span className="order-time-lux">Заказ в {formatTime(order.createdAt)}</span>
+          <div key={order.tableId} className="table-card-horizontal">
+            {/* ВЕРХНЯЯ ЧАСТЬ КАРТОЧКИ */}
+            <div className="table-card-header">
+              <div className="table-number-large">Стол № {order.tableId}</div>
+              <div className="table-meta">
+                <div className="waiter-name">{order.waiterName}</div>
+                <div className="order-time">{formatTime(order.createdAt)}</div>
+              </div>
             </div>
 
-            <div className="items-list-lux">
+            {/* СПИСОК БЛЮД (ПРОКРУЧИВАЕМЫЙ) */}
+            <div className="table-dishes-list">
               {order.items.map((item, i) => (
-                <div key={i} className="order-row-lux">
-                  <span className="item-name-lux">{item.name}</span>
-                  <span className="item-details-lux">
+                <div key={i} className="dish-item">
+                  <span className="dish-name">{item.name}</span>
+                  <span className="dish-quantity-price">
                     {item.quantity} × {item.price} ₽
                   </span>
                 </div>
               ))}
             </div>
 
-            <div className="card-bottom-lux">
-              <div className="total-sum-lux">
-                Итого: <strong>{order.total.toFixed(2)} ₽</strong>
+            {/* НИЖНЯЯ ЧАСТЬ — ИТОГ И КНОПКИ */}
+            <div className="table-card-footer">
+              <div className="table-total">
+                <span className="total-label">Итого:</span>
+                <span className="total-amount">{order.total.toFixed(2)} ₽</span>
               </div>
-              <button
-                className="add-dish-btn-lux"
-                onClick={() => goToTable(order.tableId)}
-              >
-                Редактировать заказ
-              </button>
+              <div className="table-card-buttons">
+                <button
+                  className="edit-order-btn"
+                  onClick={() => goToTable(order.tableId)}
+                >
+                  Редактировать заказ
+                </button>
+                <button
+                  className="precheck-btn"
+                  onClick={() => goToCheckout(order.tableId)}
+                >
+                  Предчек
+                </button>
+              </div>
             </div>
           </div>
         ))}
