@@ -184,7 +184,7 @@ export default function MenuPage() {
 
   // Удаление позиции из заказа
   const removeFromOrder = (itemId) => {
-    setOrder(prev => prev.filter(item => item.id !== itemId));
+    setOrder(prev => prev.filter(item => item.id !== itemId))
   };
 
   // Изменение количества
