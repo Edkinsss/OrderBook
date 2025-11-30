@@ -125,37 +125,58 @@ export default function MenuPage() {
   // Загрузка заказа из localStorage при монтировании
   useEffect(() => {
     if (id) {
-      // Сначала проверяем черновик
-      const savedOrder = localStorage.getItem(`order_${id}`);
-      if (savedOrder) {
-        try {
-          setOrder(JSON.parse(savedOrder));
-        } catch (e) {
-          console.error("Ошибка загрузки заказа:", e);
-        }
+      const currentWaiterId = localStorage.getItem("userId");
+      
+      // ВАЖНО: Сначала проверяем активный заказ (приоритет выше черновика)
+      const activeOrders = JSON.parse(localStorage.getItem("activeOrders") || "[]");
+      const activeOrder = activeOrders.find(
+        o => o.tableId === id && o.waiterId === currentWaiterId
+      );
+      
+      if (activeOrder && activeOrder.items && activeOrder.items.length > 0) {
+        // Восстанавливаем ВЕСЬ заказ из активного заказа
+        const restoredOrder = activeOrder.items.map((item, idx) => ({
+          id: Date.now() + idx + Math.random(),
+          section: item.section,
+          name: item.name,
+          price: typeof item.price === 'number' ? item.price : parseFloat(item.price) || 0,
+          quantity: item.quantity || 1
+        }));
+        setOrder(restoredOrder);
+        // Удаляем черновик, если он есть (чтобы не было конфликтов)
+        localStorage.removeItem(`order_${id}`);
       } else {
-        // Если черновика нет, проверяем активный заказ
-        const activeOrders = JSON.parse(localStorage.getItem("activeOrders") || "[]");
-        const activeOrder = activeOrders.find(o => o.tableId === id);
-        if (activeOrder) {
-          // Восстанавливаем заказ из активного заказа
-          const restoredOrder = activeOrder.items.map((item, idx) => ({
-            id: Date.now() + idx,
-            section: item.section,
-            name: item.name,
-            price: item.price,
-            quantity: item.quantity
-          }));
-          setOrder(restoredOrder);
+        // Если активного заказа нет, проверяем черновик
+        const savedOrder = localStorage.getItem(`order_${id}`);
+        if (savedOrder) {
+          try {
+            const parsed = JSON.parse(savedOrder);
+            setOrder(parsed);
+          } catch (e) {
+            console.error("Ошибка загрузки заказа:", e);
+            setOrder([]);
+          }
+        } else {
+          setOrder([]);
         }
       }
     }
   }, [id]);
 
-  // Сохранение заказа в localStorage при изменении
+  // Сохранение заказа в localStorage при изменении (черновик)
+  // НЕ сохраняем черновик, если есть активный заказ - чтобы не было конфликтов
   useEffect(() => {
     if (id && order.length >= 0) {
-      localStorage.setItem(`order_${id}`, JSON.stringify(order));
+      const currentWaiterId = localStorage.getItem("userId");
+      const activeOrders = JSON.parse(localStorage.getItem("activeOrders") || "[]");
+      const hasActiveOrder = activeOrders.some(
+        o => o.tableId === id && o.waiterId === currentWaiterId
+      );
+      
+      // Сохраняем черновик только если нет активного заказа
+      if (!hasActiveOrder) {
+        localStorage.setItem(`order_${id}`, JSON.stringify(order));
+      }
     }
   }, [order, id]);
 
@@ -192,15 +213,34 @@ export default function MenuPage() {
 
   // Добавление блюда в заказ
   const addToOrder = (sectionName, item) => {
-    const newItem = {
-      id: Date.now() + Math.random(),
-      section: sectionName,
-      name: item.name,
-      price: item.price || 0,
-      quantity: 1,
-      // image: "", // Комментарий для фото
-    };
-    setOrder(prev => [...prev, newItem]);
+    const itemPrice = typeof item.price === 'number' ? item.price : parseFloat(item.price) || 0;
+    
+    setOrder(prev => {
+      // Проверяем, есть ли уже такое блюдо в заказе (по имени и секции)
+      const existingItemIndex = prev.findIndex(
+        o => o.name === item.name && o.section === sectionName
+      );
+      
+      if (existingItemIndex >= 0) {
+        // Если блюдо уже есть - увеличиваем quantity
+        return prev.map((orderItem, idx) => 
+          idx === existingItemIndex 
+            ? { ...orderItem, quantity: orderItem.quantity + 1 }
+            : orderItem
+        );
+      } else {
+        // Если блюда нет - добавляем новое
+        const newItem = {
+          id: Date.now() + Math.random(),
+          section: sectionName,
+          name: item.name,
+          price: itemPrice,
+          quantity: 1,
+          // image: "", // Комментарий для фото
+        };
+        return [...prev, newItem];
+      }
+    });
   };
 
   // Показать модалку с описанием
@@ -235,26 +275,42 @@ export default function MenuPage() {
   const confirmOrder = () => {
     if (!id || order.length === 0) return;
 
+    const currentWaiterId = localStorage.getItem("userId");
+    if (!currentWaiterId) {
+      console.error("Официант не авторизован");
+      return;
+    }
+
     // Получаем существующие активные заказы
     const existingOrders = JSON.parse(localStorage.getItem("activeOrders") || "[]");
     
-    // Создаем новый активный заказ
+    // Проверяем, есть ли уже заказ для этого стола от этого же официанта
+    const existingIndex = existingOrders.findIndex(
+      o => o.tableId === id && o.waiterId === currentWaiterId
+    );
+    
+    // Вычисляем итоговую сумму
+    const total = calculateTotal();
+    
+    // Создаем или обновляем активный заказ
     const activeOrder = {
       tableId: id,
+      waiterId: currentWaiterId, // Добавляем ID официанта
       items: order.map(item => ({
         name: item.name,
         section: item.section,
-        price: item.price,
-        quantity: item.quantity
+        price: typeof item.price === 'number' ? item.price : parseFloat(item.price) || 0,
+        quantity: item.quantity || 1
       })),
-      total: calculateTotal(),
-      createdAt: new Date().toISOString()
+      total: total,
+      // Сохраняем исходную дату создания, если заказ обновляется
+      createdAt: existingIndex >= 0 && existingOrders[existingIndex].createdAt 
+        ? existingOrders[existingIndex].createdAt 
+        : new Date().toISOString()
     };
 
-    // Проверяем, есть ли уже заказ для этого стола
-    const existingIndex = existingOrders.findIndex(o => o.tableId === id);
     if (existingIndex >= 0) {
-      // Обновляем существующий заказ
+      // ОБНОВЛЯЕМ существующий заказ (не создаем новый)
       existingOrders[existingIndex] = activeOrder;
     } else {
       // Добавляем новый заказ
@@ -264,7 +320,7 @@ export default function MenuPage() {
     // Сохраняем в localStorage
     localStorage.setItem("activeOrders", JSON.stringify(existingOrders));
 
-    // Удаляем черновик
+    // Удаляем черновик (чтобы при следующем открытии загружался активный заказ)
     localStorage.removeItem(`order_${id}`);
 
     // Переходим на страницу активных заказов

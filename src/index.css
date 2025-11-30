@@ -2713,4 +2713,370 @@ body {
     font-size: 16px;
   }
 }
+/* === РАБОЧИЕ СТОЛЫ — ПОЛНОЭКРАННЫЙ ЛЮКС, КАК НА РИСУНКЕ === */
+.active-orders-fullscreen {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #faf9f7 0%, #f0e9e0 100%);
+  padding: 100px 20px 60px;
+  font-family: 'Tenor Sans', sans-serif;
+}
 
+/* ФИКСИРОВАННАЯ ШАПКА — ЛОГОТИП СЛЕВА, ЗАГОЛОВОК ПО ЦЕНТРУ */
+.active-header-lux {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 90px;
+  background: linear-gradient(135deg, #4d2f25 0%, #3b2118 100%);
+  color: #e0d0c3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  z-index: 1000;
+  box-shadow: 0 10px 30px rgba(77, 47, 37, 0.5);
+}
+
+.active-logo {
+  font-family: 'Cinzel', serif;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #f7ede3;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.active-page-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Cinzel', serif;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #f7ede3;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  margin: 0;
+}
+
+/* КОНТЕЙНЕР КАРТОЧЕК — ПО ЦЕНТРУ, ВЕРТИКАЛЬНО */
+.orders-container-lux {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+/* ОГРОМНАЯ КАРТОЧКА ЗАКАЗА */
+.order-card-lux {
+  background: #ffffff;
+  border-radius: 40px;
+  border: 6px solid #4d2f25;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(77, 47, 37, 0.3);
+  transition: all 0.4s ease;
+  width: 100%;
+}
+
+.order-card-lux:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 40px 80px rgba(77, 47, 37, 0.45);
+}
+
+/* ВЕРХНЯЯ ЧАСТЬ КАРТОЧКИ */
+.card-top-lux {
+  background: linear-gradient(135deg, #4d2f25 0%, #3b2118 100%);
+  color: #e0d0c3;
+  padding: 30px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-table-number {
+  font-family: 'Cinzel', serif;
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0;
+  color: #f7ede3;
+  letter-spacing: 0.1em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.order-time-lux {
+  font-family: 'Tenor Sans', sans-serif;
+  font-size: 20px;
+  opacity: 0.9;
+  color: #e0d0c3;
+  letter-spacing: 0.05em;
+}
+
+/* СПИСОК БЛЮД */
+.items-list-lux {
+  padding: 35px 40px;
+  background: #ffffff;
+}
+
+.order-row-lux {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 2px solid #e0d0c3;
+  font-size: 24px;
+}
+
+.order-row-lux:last-child {
+  border-bottom: none;
+}
+
+.item-name-lux {
+  font-family: 'Cinzel', serif;
+  color: #4d2f25;
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: 0.05em;
+  flex: 1;
+}
+
+.item-details-lux {
+  font-family: 'Tenor Sans', sans-serif;
+  color: #8B4513;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: 0.05em;
+  margin-left: 20px;
+}
+
+/* НИЖНЯЯ ЧАСТЬ КАРТОЧКИ */
+.card-bottom-lux {
+  padding: 35px 40px;
+  background: linear-gradient(135deg, #f7ede3 0%, #e0d0c3 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 3px solid #4d2f25;
+}
+
+.total-sum-lux {
+  font-family: 'Cinzel', serif;
+  font-size: 32px;
+  color: #4d2f25;
+  letter-spacing: 0.1em;
+}
+
+.total-sum-lux strong {
+  font-size: 42px;
+  color: #8B4513;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.add-dish-btn-lux {
+  padding: 20px 60px;
+  background: linear-gradient(135deg, #4d2f25 0%, #3b2118 100%);
+  color: #f7ede3;
+  border: 3px solid #d4af37;
+  border-radius: 50px;
+  font-family: 'Cinzel', serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(77, 47, 37, 0.4);
+  margin-left:  50px;
+}
+
+.add-dish-btn-lux:hover {
+  background: linear-gradient(135deg, #5a3a2d 0%, #4d2f25 100%);
+  transform: scale(1.05);
+  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.5);
+}
+
+/* ПУСТОЕ СОСТОЯНИЕ */
+.active-empty-fullscreen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  text-align: center;
+  background: linear-gradient(135deg, #faf9f7 0%, #f0e9e0 100%);
+  padding: 100px 20px;
+}
+
+.active-empty-fullscreen h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 48px;
+  color: #4d2f25;
+  letter-spacing: 0.1em;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.active-empty-fullscreen p {
+  font-family: 'Tenor Sans', sans-serif;
+  font-size: 24px;
+  color: #8b6f47;
+  margin: 0;
+}
+
+.big-btn {
+  padding: 24px 80px;
+  background: linear-gradient(135deg, #4d2f25 0%, #3b2118 100%);
+  color: #f7ede3;
+  border: 3px solid #d4af37;
+  border-radius: 60px;
+  font-family: 'Cinzel', serif;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(77, 47, 37, 0.4);
+}
+
+.big-btn:hover {
+  background: linear-gradient(135deg, #5a3a2d 0%, #4d2f25 100%);
+  transform: scale(1.05);
+  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.5);
+}
+
+/* АДАПТИВНОСТЬ */
+@media (max-width: 1024px) {
+  .active-header-lux {
+    padding: 0 30px;
+  }
+
+  .active-logo {
+    font-size: 28px;
+  }
+
+  .active-page-title {
+    font-size: 30px;
+  }
+
+  .orders-container-lux {
+    max-width: 90%;
+  }
+
+  .card-table-number {
+    font-size: 30px;
+  }
+
+  .item-name-lux {
+    font-size: 20px;
+  }
+
+  .item-details-lux {
+    font-size: 18px;
+  }
+
+  .total-sum-lux {
+    font-size: 28px;
+  }
+
+  .total-sum-lux strong {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .active-orders-fullscreen {
+    padding: 100px 15px 40px;
+  }
+
+  .active-header-lux {
+    height: 80px;
+    padding: 0 20px;
+  }
+
+  .active-logo {
+    font-size: 24px;
+  }
+
+  .active-page-title {
+    font-size: 24px;
+    letter-spacing: 0.1em;
+  }
+
+  .order-card-lux {
+    border-radius: 30px;
+    border-width: 4px;
+  }
+
+  .card-top-lux {
+    padding: 25px 25px;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .card-table-number {
+    font-size: 28px;
+  }
+
+  .order-time-lux {
+    font-size: 16px;
+  }
+
+  .items-list-lux {
+    padding: 25px 25px;
+  }
+
+  .order-row-lux {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 15px 0;
+  }
+
+  .item-name-lux {
+    font-size: 18px;
+  }
+
+  .item-details-lux {
+    font-size: 16px;
+    margin-left: 0;
+  }
+
+  .card-bottom-lux {
+    padding: 25px 25px;
+    flex-direction: column;
+    gap: 20px;
+    align-items: stretch;
+  }
+
+  .total-sum-lux {
+    font-size: 24px;
+    text-align: center;
+  }
+
+  .total-sum-lux strong {
+    font-size: 32px;
+  }
+
+  .add-dish-btn-lux {
+    width: 100%;
+    padding: 18px 40px;
+    font-size: 20px;
+  }
+
+  .active-empty-fullscreen h2 {
+    font-size: 36px;
+  }
+
+  .active-empty-fullscreen p {
+    font-size: 20px;
+  }
+
+  .big-btn {
+    padding: 20px 50px;
+    font-size: 22px;
+  }
+}
