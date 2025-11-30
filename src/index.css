@@ -2350,4 +2350,367 @@ body {
   }
 }
 
+/* ЦЕНА НА КНОПКЕ БЛЮДА */
+.item-price {
+  display: block;
+  font-family: "Cinzel", serif;
+  font-size: 14px;
+  color: #6b4a3a;
+  margin-top: 8px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+/* ЦЕНА В ЗАКАЗЕ */
+.order-item-price {
+  font-family: "Cinzel", serif;
+  font-size: 18px;
+  color: #4d2f25;
+  font-weight: 700;
+  min-width: 80px;
+  text-align: center;
+  padding: 8px 12px;
+  background: #e0d0c3;
+  border-radius: 12px;
+}
+
+/* КНОПКА ПОДТВЕРЖДЕНИЯ ЗАКАЗА */
+.confirm-order-btn {
+  width: 100%;
+  padding: 20px;
+  margin-top: 24px;
+  background: linear-gradient(135deg, #4d2f25, #3b2118);
+  color: #f7ede3;
+  border: 3px solid #d4af37;
+  border-radius: 20px;
+  font-family: "Cinzel", serif;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(77, 47, 37, 0.4);
+}
+
+.confirm-order-btn:hover:not(:disabled) {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.5);
+  background: linear-gradient(135deg, #5a3a2d, #4d2f25);
+}
+
+.confirm-order-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* МОДАЛКА С ОПИСАНИЕМ БЛЮДА */
+.description-modal {
+  background: linear-gradient(135deg, #f7ede3, #e0d0c3);
+  border: 3px solid #4d2f25;
+  border-radius: 28px;
+  padding: 40px;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.description-modal-title {
+  font-family: "Cinzel", serif;
+  font-size: 32px;
+  color: #4d2f25;
+  margin-bottom: 24px;
+  text-align: center;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.description-modal-content {
+  margin-bottom: 32px;
+}
+
+.description-text {
+  font-family: "Tenor Sans", sans-serif;
+  font-size: 18px;
+  color: #4d2f25;
+  line-height: 1.8;
+  text-align: center;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  border: 2px solid #4d2f25;
+}
+
+.description-modal-close {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #4d2f25, #3b2118);
+  color: #f7ede3;
+  border: 2px solid #4d2f25;
+  border-radius: 16px;
+  font-family: "Cinzel", serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(77, 47, 37, 0.3);
+}
+
+.description-modal-close:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(77, 47, 37, 0.4);
+  background: linear-gradient(135deg, #5a3a2d, #4d2f25);
+}
+
+/* === СТРАНИЦА АКТИВНЫХ ЗАКАЗОВ === */
+.active-orders-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #4d2f25 0%, #2f1b15 40%, #e0d0c3 100%);
+  color: #f7ede3;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.active-orders-content {
+  margin-top: 90px;
+  padding: 40px;
+  min-height: calc(100vh - 90px);
+  width: 100vw;
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.active-orders-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.active-orders-title {
+  font-family: "Cinzel", serif;
+  font-size: 64px;
+  color: #f7ede3;
+  letter-spacing: 0.3em;
+  font-weight: 700;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  margin-bottom: 16px;
+}
+
+.empty-orders-state {
+  background: rgba(247, 237, 227, 0.95);
+  border-radius: 28px;
+  padding: 80px 40px;
+  border: 3px solid #4d2f25;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(77, 47, 37, 0.3);
+}
+
+.empty-orders-state p {
+  font-family: "Tenor Sans", sans-serif;
+  font-size: 24px;
+  color: #6b4a3a;
+  margin-bottom: 32px;
+  font-style: italic;
+}
+
+.btn-go-to-tables {
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #4d2f25, #3b2118);
+  color: #f7ede3;
+  border: 3px solid #d4af37;
+  border-radius: 20px;
+  font-family: "Cinzel", serif;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(77, 47, 37, 0.4);
+}
+
+.btn-go-to-tables:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.5);
+  background: linear-gradient(135deg, #5a3a2d, #4d2f25);
+}
+
+.orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 32px;
+}
+
+.order-card {
+  background: rgba(247, 237, 227, 0.95);
+  border: 3px solid #4d2f25;
+  border-radius: 28px;
+  padding: 32px;
+  box-shadow: 0 8px 24px rgba(77, 47, 37, 0.3);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.order-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(77, 47, 37, 0.4);
+}
+
+.order-card-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #4d2f25;
+}
+
+.order-card-table {
+  font-family: "Cinzel", serif;
+  font-size: 28px;
+  color: #4d2f25;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+.order-card-items {
+  flex: 1;
+  margin-bottom: 24px;
+}
+
+.order-card-items-title {
+  font-family: "Cinzel", serif;
+  font-size: 20px;
+  color: #4d2f25;
+  margin-bottom: 16px;
+  letter-spacing: 0.05em;
+}
+
+.order-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.order-item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: linear-gradient(145deg, #ffffff, #f7ede3);
+  border: 2px solid #4d2f25;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.order-item-row:hover {
+  box-shadow: 0 2px 8px rgba(77, 47, 37, 0.2);
+  transform: translateX(4px);
+}
+
+.order-item-row .order-item-name {
+  font-family: "Cinzel", serif;
+  font-size: 16px;
+  color: #4d2f25;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.order-item-details {
+  font-family: "Tenor Sans", sans-serif;
+  font-size: 14px;
+  color: #6b4a3a;
+  font-weight: 600;
+}
+
+.order-card-footer {
+  padding-top: 16px;
+  border-top: 2px solid #4d2f25;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.order-card-total {
+  text-align: center;
+  padding: 16px;
+  background: linear-gradient(135deg, #4d2f25, #3b2118);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(77, 47, 37, 0.3);
+}
+
+.order-card-total strong {
+  font-family: "Cinzel", serif;
+  font-size: 24px;
+  color: #f7ede3;
+  letter-spacing: 0.1em;
+}
+
+.btn-add-dish {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, #4d2f25, #3b2118);
+  color: #f7ede3;
+  border: 2px solid #d4af37;
+  border-radius: 16px;
+  font-family: "Cinzel", serif;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(77, 47, 37, 0.3);
+}
+
+.btn-add-dish:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4);
+  background: linear-gradient(135deg, #5a3a2d, #4d2f25);
+}
+
+/* АДАПТИВНОСТЬ ДЛЯ АКТИВНЫХ ЗАКАЗОВ */
+@media (max-width: 1024px) {
+  .orders-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .active-orders-title {
+    font-size: 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .active-orders-content {
+    padding: 24px 16px;
+  }
+
+  .active-orders-title {
+    font-size: 36px;
+    letter-spacing: 0.2em;
+  }
+
+  .orders-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .order-card {
+    padding: 24px;
+  }
+
+  .description-modal {
+    padding: 24px;
+    max-width: 95%;
+  }
+
+  .description-modal-title {
+    font-size: 24px;
+  }
+
+  .description-text {
+    font-size: 16px;
+  }
+}
 

@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import WelcomePage from "./pages/WelcomePage";
 import TablesPage from "./pages/TablesPage";
 import MenuPage from "./pages/MenuPage";
+import ActiveOrdersPage from "./pages/ActiveOrdersPage";
 
 export default function App() {
   return (
@@ -19,6 +20,10 @@ export default function App() {
 
         {/* Страница меню для выбранного стола */}
         <Route path="/table/:id" element={<MenuPage />} />
+        
+        {/* Страница активных заказов */}
+        <Route path="/active-orders" element={<ActiveOrdersPage />} />
+        
         <Route path="*" element={<div className="page">404 — Страница не найдена</div>} />
       </Routes>
     </Router>
