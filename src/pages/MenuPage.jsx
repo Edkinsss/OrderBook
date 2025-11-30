@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { USERS } from "../data/users";
+import SmartRecommendations from "../components/SmartRecommendations";
 
 
 const MENU_SECTIONS = {
@@ -453,6 +454,15 @@ export default function MenuPage() {
               <div className="empty-state">
                 <p>Выберите раздел меню для просмотра блюд</p>
               </div>
+            )}
+
+            {/* УМНЫЕ РЕКОМЕНДАЦИИ — ПОКАЗЫВАЕМ ТОЛЬКО ЕСЛИ ЕСТЬ БЛЮДА В ЗАКАЗЕ */}
+            {order.length > 0 && (
+              <SmartRecommendations
+                order={order}
+                total={total}
+                onAddToOrder={addToOrder}
+              />
             )}
 
             {/* ЗАКАЗ */}
