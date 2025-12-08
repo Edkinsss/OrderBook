@@ -150,7 +150,7 @@ export default function TablesPage() {
           {/* Колокольчик уведомлений */}
           <div className="notif-wrapper">
             <button className="notif-bell" onClick={() => setShowNotifs(!showNotifs)}>
-              Уведомления
+              {/* Уведомления */}
               {notifications.length > 0 && <span className="notif-badge">{notifications.length}</span>}
             </button>
             {showNotifs && notifications.length > 0 && (
@@ -165,7 +165,7 @@ export default function TablesPage() {
           {/* Навигация */}
           <nav className="header-nav">
             <button className="nav-btn active">Столы</button>
-            <button className="nav-btn">Расчет</button>
+            {/* <button className="nav-btn">Расчет</button> */}
           </nav>
 
           {/* Информация о пользователе */}

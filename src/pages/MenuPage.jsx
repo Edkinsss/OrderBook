@@ -369,7 +369,7 @@ export default function MenuPage() {
         <div className="header-right">
           <div className="notif-wrapper">
             <button className="notif-bell" onClick={() => setShowNotifs(!showNotifs)}>
-              Уведомления
+              {/* Уведомления */}
               {notifications.length > 0 && <span className="notif-badge">{notifications.length}</span>}
             </button>
             {showNotifs && notifications.length > 0 && (
@@ -384,7 +384,7 @@ export default function MenuPage() {
           <nav className="header-nav">
             <button className="nav-btn" onClick={() => navigate("/tables")}>Столы</button>
             <button className="nav-btn active">Меню</button>
-            <button className="nav-btn">Расчет</button>
+            {/* <button className="nav-btn">Расчет</button> */}
           </nav>
 
           <div className="user-info">
